@@ -28,14 +28,20 @@ export const RestaurantCardComponent = (args, { argTypes }) => ({
 });
 
 RestaurantCardComponent.args = {
+    locale: 'en-GB',
     data: {
         id: '00000',
-        name: 'Fake Restaurant',
+        name: "McDonald's® - London - St Paul's",
         disabled: false,
         logoUrl: restaurantLogo,
         imgUrl: restaurantImage,
         isListItem: false,
-        url: 'some-restaurant/12345'
+        url: 'some-restaurant/12345',
+        rating: {
+            mean: 5,
+            count: 1400,
+            isCustomerRating: false
+        }
     },
 
     flags: {

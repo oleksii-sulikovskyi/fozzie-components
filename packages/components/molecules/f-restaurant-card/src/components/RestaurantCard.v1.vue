@@ -34,16 +34,16 @@
         <div :class="$style['c-restaurantCard-content']">
             <!-- Restaurant Name -->
             <h3
+                :class="$style['c-restaurantCard-name']"
                 data-test-id="restaurant_name"
                 data-search-name>
-                Fake Restaurant
+                {{ name }}
             </h3>
 
-            <!-- stress test the content size -->
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Eius mollitia distinctio magni enim neque, labore repellat
-                quaerat quam magnam, sint vel, officiis nam voluptas hic.
-                Assumenda illum repudiandae libero impedit?</p>
+            <!-- TODO: Inject client only wrapper -->
+            <restaurant-rating
+                :locale="locale"
+                v-bind="rating" />
 
             <!-- Cuisines -->
             <!-- START ERROR BOUNDARY -->
@@ -82,16 +82,25 @@
 
         <!-- optional items -->
         <p :class="[$style['c-restaurantCard-dish']]">DISH RESULT</p>
-        <p :class="[$style['c-restaurantCard-dish']]">DISH RESULT</p>
-        <p :class="[$style['c-restaurantCard-dish']]">DISH RESULT</p>
     </a>
 </template>
 
 <script>
+import { VueGlobalisationMixin } from '@justeat/f-globalisation';
+import RestaurantRating from './RestaurantRating/RestaurantRating.vue';
+import tenantConfigs from '../tenants';
 
 export default {
     name: 'RestaurantCardV1',
+    components: {
+        RestaurantRating
+    },
+    mixins: [VueGlobalisationMixin],
     props: {
+        locale: {
+            type: String,
+            default: ''
+        },
         id: {
             type: String,
             default: null
@@ -112,6 +121,10 @@ export default {
             type: String,
             default: null
         },
+        rating: {
+            type: Object,
+            default: null
+        },
         disabled: {
             type: Boolean,
             default: false
@@ -125,6 +138,11 @@ export default {
             type: Object,
             default: () => ({})
         }
+    },
+    data () {
+        return {
+            tenantConfigs
+        };
     }
 };
 </script>
@@ -151,7 +169,7 @@ $logo-borderColor                         : $color-border-default;
   background-size: cover;
   background-position: center;
   width: 100%;
-  height: 200px; // TODO: agree with design
+  height: 165px;
   border-radius: $img-borderRadius;
   position: relative;
 
@@ -197,4 +215,5 @@ $logo-borderColor                         : $color-border-default;
       }
   }
 }
+
 </style>
