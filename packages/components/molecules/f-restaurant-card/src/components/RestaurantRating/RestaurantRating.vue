@@ -62,11 +62,11 @@ export default {
 </script>
 
 <style lang="scss">
-// .c-rating {
-//     background-image: url('/Users/jamie.maguire/code-personal/fozzie-components/packages/components/molecules/f-restaurant-card/src/assets/images/icons/stars/star--empty.svg');
-// }
+.c-rating {
+    background-image: url('../../assets/images/icons/stars/star--empty.svg');
+}
 
-// .c-rating--fill {
-//     background-image: url('../../assets/images/icons/stars/star--filled.svg');
-// }
+.c-rating--fill {
+    background-image: url('../../assets/images/icons/stars/star--filled.svg');
+}
 </style>
