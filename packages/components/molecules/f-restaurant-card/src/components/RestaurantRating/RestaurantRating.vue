@@ -6,23 +6,23 @@
             <span :class="'c-rating--fill ' + ratingClass" />
         </div>
         <p>
-            {{ $t('restaurant.meta.rating.star', {
+            <!-- {{ $t('restaurant.meta.rating.star', {
                 mean,
                 max: 6
-            }) }}
+            }) }} -->
         </p>
         <span
             data-test-id="restaurant-rating"
             class="is-visuallyHidden">
-            {{ $t('restaurant.meta.rating.star', {
+            <!-- {{ $t('restaurant.meta.rating.star', {
                 mean,
                 max: 6
-            }) }}
+            }) }} -->
         </span>
         <strong
             class="c-listing-item-ratingText"
             data-test-id="rating">
-            {{ $t(ratingsMessage, { count } ) }}
+            <!-- {{ $t(ratingsMessage, { count } ) }} -->
         </strong>
     </div>
 </template>

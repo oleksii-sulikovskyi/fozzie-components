@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import { VueGlobalisationMixin } from '@justeat/f-globalisation';
+// import { VueGlobalisationMixin } from '@justeat/f-globalisation';
 import RestaurantRating from './RestaurantRating/RestaurantRating.vue';
 import tenantConfigs from '../tenants';
 
@@ -95,7 +95,7 @@ export default {
     components: {
         RestaurantRating
     },
-    mixins: [VueGlobalisationMixin],
+    // mixins: [VueGlobalisationMixin],
     props: {
         locale: {
             type: String,
