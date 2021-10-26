@@ -10,9 +10,6 @@
         @click="$emit('restaurant-card-clicked')">
 
         <!-- background image -->
-        <!-- TODO: agree with design what should happen when the image is missing.
-        Simply not rendering the image container means we won't render the logo and any badges etc.
-        We could keep logos and badges outside of the img container and change padding when the image is missing. -->
         <div
             :class="[$style['c-restaurantCard-img']]"
             :style="`background-image: url(${imgUrl});`"
@@ -47,37 +44,72 @@
 
             <!-- Cuisines -->
             <!-- START ERROR BOUNDARY -->
-            <slot name="cuisines" />
+            <component
+                :is="errorBoundary"
+                tier="3">
+                <slot name="cuisines" />
+            </component>
             <!-- END ERROR BOUNDARY -->
 
 
             <!-- New label -->
             <!-- START ERROR BOUNDARY -->
-            <slot name="new-label" />
+            <component
+                :is="errorBoundary"
+                tier="3">
+                <slot name="new-label" />
+            </component>
             <!-- END ERROR BOUNDARY -->
 
             <!-- Ratings -->
             <!-- START ERROR BOUNDARY -->
-            <slot name="ratings" />
+            <component
+                :is="errorBoundary"
+                tier="3">
+                <slot name="ratings" />
+            </component>
             <!-- END ERROR BOUNDARY -->
 
             <!-- Offline Icon -->
 
             <!-- Meta Items List -->
-            <slot name="meta-items" />
+            <!-- START ERROR BOUNDARY -->
+            <component
+                :is="errorBoundary"
+                tier="3">
+                <slot name="meta-items" />
+            </component>
+            <!-- END ERROR BOUNDARY -->
 
             <!-- Local Legend label -->
-            <slot name="local-legend" />
+            <!-- START ERROR BOUNDARY -->
+            <component
+                :is="errorBoundary"
+                tier="3">
+                <slot name="local-legend" />
+            </component>
+            <!-- END ERROR BOUNDARY -->
 
             <!-- Badges -->
             <div>
                 <!-- misc badges -->
                 <!-- START ERROR BOUNDARY -->
-                <slot name="badges" />
+                <component
+                    :is="errorBoundary"
+                    tier="3">
+                    <slot name="badges" />
+                </component>
                 <!-- END ERROR BOUNDARY -->
             </div>
             <!-- Optional items i.e. dish search results -->
-            <slot name="optional-items" />
+            <!-- START ERROR BOUNDARY -->
+            <component
+                :is="errorBoundary"
+                tier="3">
+                <slot name="optional-items" />
+            </component>
+            <!-- END ERROR BOUNDARY -->
+
         </div>
 
         <!-- optional items -->
@@ -89,6 +121,7 @@
 // import { VueGlobalisationMixin } from '@justeat/f-globalisation';
 import RestaurantRating from './RestaurantRating/RestaurantRating.vue';
 import tenantConfigs from '../tenants';
+import ErrorBoundaryMixin from '../assets/vue/mixins/errorBoundary.mixin';
 
 export default {
     name: 'RestaurantCardV1',
@@ -96,6 +129,7 @@ export default {
         RestaurantRating
     },
     // mixins: [VueGlobalisationMixin],
+    mixins: [ErrorBoundaryMixin],
     props: {
         locale: {
             type: String,
@@ -152,14 +186,15 @@ $img-borderRadius                         : $radius-rounded-c;
 $logo-borderRadius                        : $radius-rounded-b;
 $logo-borderColor                         : $color-border-default;
 
-
 .c-restaurantCard {
   text-decoration: none;
   display: grid;
+  grid-gap: spacing(x2);
   grid-template-columns: 1fr;
 
   &.c-restaurantCard--listItem {
       @include media('>mid') {
+        grid-gap: spacing() spacing(x2);
         grid-template-columns: minmax(150px, 20%) 1fr;
       }
   }
@@ -183,13 +218,11 @@ $logo-borderColor                         : $color-border-default;
 }
 
 .c-restaurantCard-content {
-  padding: spacing() 0;
-
   .c-restaurantCard--listItem & {
-      @include media('>mid') {
-        grid-column: 2/3;
-        padding-left: spacing(x1.5);
-      }
+    @include media('>mid') {
+      padding: spacing() 0;
+      grid-column: 2/3;
+    }
   }
 }
 
@@ -203,7 +236,6 @@ $logo-borderColor                         : $color-border-default;
 
 // placeholder styles - will be extracted to subcomponent
 .c-restaurantCard-dish {
-  margin: 5px 0;
   background: lightgreen;
   padding: 1rem;
   border: 2px dashed green;
