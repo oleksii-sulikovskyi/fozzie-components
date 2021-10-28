@@ -63,10 +63,10 @@ export default {
 
 <style lang="scss">
 .c-rating {
-    background-image: url('../../assets/images/icons/stars/star--empty.svg');
+    background-image: inline('#{$icon-path}/stars/star--empty.svg');
 }
 
 .c-rating--fill {
-    background-image: url('../../assets/images/icons/stars/star--filled.svg');
+    background-image: inline('#{$icon-path}/stars/star--filled.svg');
 }
 </style>

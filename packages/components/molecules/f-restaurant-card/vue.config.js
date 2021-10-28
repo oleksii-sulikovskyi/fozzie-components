@@ -1,6 +1,7 @@
 const path = require('path');
 
 const rootDir = path.join(__dirname, '..', '..');
+const assetsPlugin = require('postcss-assets');
 const sassOptions = require('../../../../config/sassOptions')(rootDir);
 
 // vue.config.js
@@ -19,8 +20,14 @@ module.exports = {
                  * @param resourcePath
                  * @returns {string}
                  */
-                additionalData (content, { resourcePath }) {
-                    const levelsUpToSrc = resourcePath.split(path.sep).reverse().indexOf('src');
+                additionalData (content, { resourcePath, rootContext }) {
+                    const relativePath = path.relative(rootContext, resourcePath);
+                    const levelsUpToSrc = relativePath.split(path.sep).reverse().indexOf('src');
+
+                    // Only attempt to add common styles when under a src dir
+                    if (levelsUpToSrc === -1) {
+                        return `${content}`;
+                    }
 
                     const absPath = path.join(
                         resourcePath,
@@ -34,18 +41,18 @@ module.exports = {
                             ${content}`;
                 }
             });
-
-        const svgRule = config.module.rule('svg');
-
-        svgRule.uses.clear();
-
-        svgRule
-            .use('babel-loader')
-            .loader('babel-loader')
-            .end()
-            .use('vue-svg-loader')
-            .loader('vue-svg-loader');
     },
+
+    css: {
+        loaderOptions: {
+            postcss: {
+                plugins: [
+                    assetsPlugin
+                ]
+            }
+        }
+    },
+
     pluginOptions: {
         lintStyleOnBuild: true
     }
