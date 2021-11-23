@@ -453,10 +453,12 @@ export default {
                 await this.lookupGeoLocation();
 
                 await this.handleUpdateCheckout(this.getMappedDataForUpdateCheckout());
-
+                console.table({isFulfillable: this.isFulfillable, isLoggedIn: this.isLoggedIn});
                 if (this.isFulfillable) {
                     await this.submitOrder();
-
+                    if (!this.isLoggedIn) {
+                        this.checkoutAnalyticsService.trackGuestCheckoutSubmission();
+                    }
                     this.redirectToPayment();
                 } else {
                     this.handleNonFulfillableCheckout();

@@ -51,7 +51,8 @@ jest.mock('../../services/analytics', () => jest.fn().mockImplementation(() => (
     trackInitialLoad: jest.fn(),
     trackFormErrors: jest.fn(),
     trackDialogEvent: jest.fn(),
-    trackLowValueOrderExperiment: jest.fn()
+    trackLowValueOrderExperiment: jest.fn(),
+    trackGuestCheckoutSubmission: jest.fn()
 })));
 
 const $style = {
@@ -1128,6 +1129,14 @@ describe('Checkout', () => {
 
             describe('when invoked', () => {
                 describe('AND `isLoggedIn` is falsey', () => {
+                    it('should call trackGuestCheckoutSubmission', async () => {
+                        // Act
+                        await wrapper.vm.submitCheckout();
+
+                        // Assert
+                        expect(wrapper.vm.checkoutAnalyticsService.trackGuestCheckoutSubmission).toHaveBeenCalled();
+                    });
+
                     describe('AND `isGuestCreated` is falsey', () => {
                         it('should call `setupGuestUser`', async () => {
                             // Arrange
